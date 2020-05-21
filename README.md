@@ -1,2 +1,2 @@
-#Learning Machine Learning
+# Learning Machine Learning
 Documenting my journey of learning machine learning.
