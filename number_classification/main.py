@@ -1,7 +1,8 @@
 # Data manipulation and interaction with neural network
 
-from neural_net.py import *
+from neural_net import *
 import torch
+import torch.nn.functional as F
 import torchvision
 from torchvision import transforms, datasets
 import torch.optim as optim
@@ -32,9 +33,8 @@ EPOCHS = 3
 for epoch in range(EPOCHS):
 	# For each batch
 	for images, labels in X_train:
-
 		# Reshape image to a flat tensor
-		image = image.view(1, 28*28)
+		image = images.view(images.shape[0], -1)
 		# Forward pass of image
 		output = neural_net(image)
 
@@ -45,7 +45,7 @@ for epoch in range(EPOCHS):
 
 		# update weights and biases
 		optimiser.step()
-		print(loss)
+	print(f"The loss at epoch {epoch} is : {loss}")
 
 
 
@@ -56,7 +56,7 @@ with torch.no_grad():
 	total = 0
 	correct = 0
 	for images, labels in X_test:
-		output = neural_net(images.view(1, 28*28))
+		output = neural_net(images.view(-1, 28*28))
 
 		# Get the predictions of the neural net
 		_, predicted = torch.max(output, 1)

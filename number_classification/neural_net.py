@@ -2,6 +2,7 @@
 
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 
 # The layers of this neural network have been hardcoded for simplicity
 class NeuralNetwork(nn.Module):
@@ -21,12 +22,12 @@ class NeuralNetwork(nn.Module):
 
 
 	def forward(self, X):
-		# Pass input through first layer and apply activ func to resutl
+		# Pass input through first layer and apply activ func to result
 		X = F.relu(self.full_connections1(X))
 
 		X = F.relu(self.full_connections2(X))
 
 		X = F.relu(self.full_connections3(X))
-		X = self.LogSoftmax(self.full_connections4(X))
+		X = F.log_softmax(self.full_connections4(X), dim = 1)
 
 		return X
